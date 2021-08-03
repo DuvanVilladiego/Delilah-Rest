@@ -10,7 +10,7 @@ router.get("/list", async (req, res) => {
         res.status(200).json(result);
       })
       .catch((err) => {
-        console.log("error  en la insercion " + err);
+        console.log("error al consultar " + err);
       });
   } catch (error) {
     res.status(400).json({ message: error.message });

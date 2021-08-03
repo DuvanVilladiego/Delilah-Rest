@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/auth/", Auth);
-// app.use("/api/orders/", Orders);
+app.use("/api/orders/", Orders);
 app.use("/api/products/", Products);
 
 app.listen(process.env.PORT, () => {
