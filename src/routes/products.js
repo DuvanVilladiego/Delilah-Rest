@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { sequelize } = require("../../db/db");
+const { sequelize } = require("../db/db");
 
 router.get("/list", async (req, res) => {
   try {
