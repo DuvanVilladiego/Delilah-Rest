@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bycript = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { sequelize } = require("../db/db");
 
 router.post("/register", async (req, res) => {
@@ -45,7 +44,8 @@ router.post("/register", async (req, res) => {
         console.log(projects);
       })
       .then((e) => {
-        res.status(200).json({ message: "Registro exitoso" });
+        const jwtToken = user.generateJwt();
+        res.status(200).json({ token: jwtToken });
       })
       .catch((error) => {
         console.log("error  en la insercion " + error);
