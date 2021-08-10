@@ -1,0 +1,364 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0"
+  title: Delillah Resto
+  contact: {}
+host: localhost:3200
+basePath: /api
+tags:
+- name: usuario
+- name: productos
+- name: ordenes
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /api/auth/register:
+    post:
+      tags:
+      - usuario
+      summary: Registro de usuario/admin
+      operationId: registar
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/registarrequest'
+      responses:
+        "200":
+          description: jwtToken
+          headers: {}
+        "400":
+          description: Error en la insercion
+          headers: {}
+      deprecated: false
+  /api/auth/login:
+    post:
+      tags:
+      - usuario
+      summary: Log in
+      operationId: login
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/loginrequest'
+      responses:
+        "200":
+          description: jwtToken
+          headers: {}
+        "400":
+          description: Error al logear
+          headers: {}
+      deprecated: false
+  /api/products/list:
+    get:
+      tags:
+      - productos
+      summary: Listar todos los platos
+      operationId: listar
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: Listado de platos
+          headers: {}
+        "400":
+          description: Error
+          headers: {}
+      deprecated: false
+  /api/products/create:
+    post:
+      tags:
+      - productos
+      summary: Crear plato
+      operationId: crear
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/crearrequest'
+      responses:
+        "200":
+          description: Producto creado con exito
+          headers: {}
+        "400":
+          description: Error al crear el plato
+          headers: {}
+      deprecated: false
+  /api/products/update/{idPlato}:
+    put:
+      tags:
+      - productos
+      summary: Actualizar informacion de plato
+      operationId: actualizar
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/actualizarrequest'
+      - name: idPlato
+        in: path
+        description: Id del producto a eliminar
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: Producto actualizado con exito
+          headers: {}
+        "400":
+          description: Error al actualizar el plato
+          headers: {}
+      deprecated: false
+  /api/products/delete/{idPlato}:
+    delete:
+      tags:
+      - productos
+      summary: Borrar plato
+      operationId: borrar
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/borrarrequest'
+      - name: idPlato
+        in: path
+        description: Id del producto a eliminar
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: Producto eliminado con exito
+          headers: {}
+        "400":
+          description: Error al eliminar el plato
+          headers: {}
+      deprecated: false
+  /api/orders/createorder:
+    post:
+      tags:
+      - ordenes
+      summary: Crear pedido
+      operationId: Postcrear
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/crearrequest1'
+      responses:
+        "200":
+          description: Orden creada con exito
+          headers: {}
+        "400":
+          description: Error
+          headers: {}
+      deprecated: false
+  /api/orders/updateorder/{idPedido}:
+    put:
+      tags:
+      - ordenes
+      summary: Actualizar pedido
+      operationId: Putactualizar
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: Body
+        description: ""
+        required: true
+        schema:
+          $ref: '#/definitions/actualizarrequest1'
+      - name: idPedido
+        in: path
+        description: Id de orden a actualizar
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: Orden actualizada con exito
+          headers: {}
+        "400":
+          description: Orden no encontrada
+          headers: {}
+      deprecated: false
+securityDefinitions: {}
+definitions:
+  registarrequest:
+    type: object
+    required:
+    - direccion
+    - email
+    - nombre
+    - password
+    - telefono
+    - username
+    properties:
+      username:
+        type: string
+      nombre:
+        type: string
+      email:
+        type: string
+      telefono:
+        type: string
+      direccion:
+        type: string
+      password:
+        type: string
+      idRol:
+        type: string
+    title: registarrequest
+    example:
+      username: admin
+      nombre: admin
+      email: admin@gmail.com
+      telefono: "00000000"
+      direccion: xxxxxxxx
+      password: "1234"
+      idRol: 0 (Parametro opcional)
+  loginrequest:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    title: loginrequest
+    example:
+      email: admin@gmail.com
+      password: "1234"
+  crearrequest:
+    type: object
+    required:
+    - email
+    - nombre_plato
+    - password
+    - precio
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      nombre_plato:
+        type: string
+      precio:
+        type: string
+    title: crearrequest
+    example:
+      email: Correo de admin
+      password: Contraseña de admin
+      nombre_plato: Nombre de plato a crear
+      precio: Precio deseado (int)
+  actualizarrequest:
+    type: object
+    required:
+    - email
+    - nombre_plato
+    - password
+    - precio
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      nombre_plato:
+        type: string
+      precio:
+        type: string
+    title: actualizarrequest
+    example:
+      email: Correo de admin
+      password: Contraseña admin
+      nombre_plato: Nombre deseado
+      precio: Precio deseado (int)
+  borrarrequest:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    title: borrarrequest
+    example:
+      email: Correo de admin
+      password: Contraseña admin
+  crearrequest1:
+    type: object
+    required:
+    - descripcion
+    - email
+    - idMetodo_pago
+    - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      descripcion:
+        type: string
+      idMetodo_pago:
+        type: string
+      idUsuario:
+        type: string
+    title: crearrequest1
+    example:
+      email: Correo de usuario
+      password: Contraseña de usuario
+      descripcion: Nombre de producto separados por coma (,)
+      idMetodo_pago: idMetodo_Pago
+  actualizarrequest1:
+    type: object
+    required:
+    - email
+    - idEstado
+    - password
+    properties:
+      idEstado:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    title: actualizarrequest1
+    example:
+      idEstado: id del estado deseado
+      email: Correo de administrador
+      password: Contraseña de administrador
