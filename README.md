@@ -4,7 +4,7 @@
 
 *Paso #1* | _Instalar Programas Necesarios_ |  
 
-    _Seguir los pasos de instalacion de cada programa en su web_  
+_Seguir los pasos de instalacion de cada programa en su web_  
 
 - [Mariadb](https://mariadb.org/download/) 
     _Al momento de instalar mariadb le dará la opción de asignar una clave para este proyecto utilizamos "1234" (sin las comillas), esta clave sera el usuario "root" (sin las comillas), que le permitirá ver todas las base de datos que tiene en su equipo... Recuerde que es algo de uso propio, así que puede colocar la que guste... Tendra que recordarla, ya que se utilizara en este proyecto_
