@@ -5,8 +5,9 @@ const jwt = require("jsonwebtoken");
 const { sequelize } = require("../db/db");
 
 router.post("/register", async (req, res) => {
-  const { username, nombre, email, telefono, direccion, password, idRol } =
-    req.body;
+  const { username , nombre, email, telefono, direccion, password } = req.body;
+  let {idRol} = req.body;
+  if(!idRol) idRol = "1";
   const user = await sequelize.query(
     `SELECT * FROM usuario WHERE email = '${email}'`,
     { type: sequelize.QueryTypes.SELECT }
@@ -20,8 +21,7 @@ router.post("/register", async (req, res) => {
     !email ||
     !telefono ||
     !direccion ||
-    !password ||
-    !idRol
+    !password 
   ) {
     return res.status(400).json({ error: "Faltan datos" });
   }

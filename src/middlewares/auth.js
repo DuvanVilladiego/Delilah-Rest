@@ -2,7 +2,6 @@ const { sequelize } = require("../db/db");
 
 const Admin = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
   if (!email || !password) {
     res.status(400).json({ error: "Faltan datos" });
   }

@@ -5,8 +5,15 @@ const { sequelize } = require("../db/db");
 
 router.post("/createorder", VerifyUser, async (req, res) => {
   try {
-    const { descripcion, idMetodo_pago, idUsuario } = req.body;
-    if (!descripcion || !idMetodo_pago || !idUsuario) {
+    const { descripcion, idMetodo_pago } = req.body;
+    const { email } = req.body;
+    let idUsuario = await sequelize.query(
+      `SELECT * FROM usuario WHERE email = '${email}'
+        LIMIT 1`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    idUsuario = idUsuario[0].idUsuario;
+    if (!descripcion || !idMetodo_pago ) {
       res.status(400).json({ error: "Faltan datos" });
     }
     let total = 0;
