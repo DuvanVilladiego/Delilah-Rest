@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
-  "mariadb://root:admin@localhost:3306/delilah_resto"
+  "mariadb://root:1234@localhost:3306/delilah_resto"
 );
 
     sequelize
