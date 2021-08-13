@@ -69,6 +69,7 @@ router.put("/updateorder/:idPedido", VerifyUser, Admin, async (req, res) => {
 
 router.delete("/deleteOrder/:idPedido", verifyExistOrder, VerifyUser, Admin, async (req, res) => {
   const idPedido = req.params.idPedido;
+  console.log(idPedido);
   try {
     await sequelize.query(`DELETE FROM pedido WHERE idPedido = "${idPedido}"`, {
       type: sequelize.QueryTypes.DELETE,
