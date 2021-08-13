@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {Admin, VerifyUser} = require("../middlewares/auth");
+const verifyExistOrder= require("../middlewares/orders");
 const { sequelize } = require("../db/db");
 
 router.post("/createorder", VerifyUser, async (req, res) => {
@@ -18,7 +19,7 @@ router.post("/createorder", VerifyUser, async (req, res) => {
     }
     let total = 0;
     const descripcion_array = descripcion.split(",");
-    for (i = 0; descripcion_array.length > i; i++) {
+    for (let i = 0; descripcion_array.length > i; i++) {
       let producto = await sequelize.query(
         `SELECT * FROM plato WHERE nombre_plato =  "${descripcion_array[i]}"`,
         {
@@ -65,5 +66,17 @@ router.put("/updateorder/:idPedido", VerifyUser, Admin, async (req, res) => {
         res.status(400).json({ message: "Orden no encontrada" });
     }
 })
+
+router.delete("/deleteOrder/:idPedido", verifyExistOrder, VerifyUser, Admin, async (req, res) => {
+  const idPedido = req.params.idPedido;
+  try {
+    await sequelize.query(`DELETE FROM pedido WHERE idPedido = "${idPedido}"`, {
+      type: sequelize.QueryTypes.DELETE,
+    });
+    return res.status(200).json({ message: "Pedido eliminado con exito"});
+  } catch (error) {
+    res.status(400).json({ error: "Error al eliminar el pedido " + error.message });
+  }
+});
 
 module.exports = router;
